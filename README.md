@@ -1,3 +1,3 @@
 # Bit-Plane Complexity Segmentation (BPCS) Steganography
 
-This is a Netbeans project implements BPCS Steganography algorithm
+This is a NetBeans project implements BPCS Steganography algorithm
