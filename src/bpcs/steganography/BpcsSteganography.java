@@ -1,17 +1,24 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package bpcs.steganography;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
 
+/**
+ *
+ * @author malqu
+ */
 public class BpcsSteganography {
+    public static int CHUNK_HEIGHT = 300;
+    public static int CHUNK_WIDTH = 300;
     
-    private static int CHUNK_HEIGHT = 8;
-    private static int CHUNK_WIDTH = 8;
-    
-    private BufferedImage loadImage(String pathToFile) {
+    BufferedImage loadImage(String pathToFile) {
         BufferedImage image = null;
         try {
             image = ImageIO.read(new File(pathToFile));
@@ -21,7 +28,7 @@ public class BpcsSteganography {
         return image;
     }
     
-    private void printImageProperties(BufferedImage image) {
+    void printImageProperties(BufferedImage image) {
         if (image!=null) {
             System.out.println("Image Height:\t " + image.getHeight());
             System.out.println("Image Width :\t " + image.getWidth());
@@ -34,7 +41,7 @@ public class BpcsSteganography {
         }
     }
     
-    private BufferedImage[] getImageChunks(BufferedImage image) {
+    BufferedImage[] getImageChunks(BufferedImage image) {
         int cols = image.getWidth()/CHUNK_WIDTH;
         int rows = image.getHeight()/CHUNK_HEIGHT;
         BufferedImage imageChunks[] = new BufferedImage[rows*cols];
@@ -49,26 +56,30 @@ public class BpcsSteganography {
         return imageChunks;
     }
     
-    private BufferedImage getImagePlane(BufferedImage image, int planeIdx) {
+    BufferedImage[] getMonochromes(BufferedImage image) {
+        int colorComponentSize = image.getColorModel().getNumComponents();
+        BufferedImage[] imageChromes = new BufferedImage[colorComponentSize];
+        
+        switch (colorComponentSize) {
+            case 3: //rgb
+                for (int i=0; i<image.getHeight(); i++) {
+                    for (int j=0; j>image.getWidth(); j++) {
+                        int rgb = image.getRGB(j, i);
+                        
+                    }
+                }
+        }
         return null;
     }
     
-    public static void main(String[] args) {
-        
-        BufferedImage coverImg;
-        
-        BpcsSteganography bpcs = new BpcsSteganography();
-        String imageFile = "gajah.jpg";
-        
-        coverImg = bpcs.loadImage(imageFile);
-        System.out.println("Cover image properties");
-        bpcs.printImageProperties(coverImg);
-        
-        BufferedImage[] coverImgChunks = bpcs.getImageChunks(coverImg);
-        
-        System.out.println("\nChunk-0 properties");
-        bpcs.printImageProperties(coverImgChunks[0]);
-        
+    BufferedImage getImagePlane(BufferedImage image, int planeIdx) {
+        return null;
     }
     
+    void previewAllChunkImages(BufferedImage[] images) {
+        ImageViewer imgViewer = new ImageViewer();
+        for (int i=0; i<images.length; i++) {
+            imgViewer.viewFromBuffImage(images[i], "image-"+i);
+        }
+    }
 }
