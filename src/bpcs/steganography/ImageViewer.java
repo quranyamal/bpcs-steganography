@@ -26,7 +26,7 @@ public class ImageViewer extends Component {
     public ImageViewer() {
     }
     
-    public void viewFromFile(String imageFile, String title) {
+    public void viewImage(String imageFile, String title) {
         JFrame f = new JFrame(title);
             
         f.addWindowListener(new WindowAdapter(){
@@ -45,8 +45,8 @@ public class ImageViewer extends Component {
         f.pack();
         f.setVisible(true);
     }
-
-        public void viewFromBuffImage(BufferedImage buffImage, String title) {
+    
+    public void viewImage(BufferedImage buffImage, String title) {
         JFrame f = new JFrame(title);
             
         f.addWindowListener(new WindowAdapter(){
@@ -55,17 +55,19 @@ public class ImageViewer extends Component {
                 }
             });
 
-//        try {
-//            img = ImageIO.read(new File(imageFile));
-//        } catch (IOException e) {
-//            System.err.println(e);
-//        }
         Graphics g = buffImage.getGraphics();
         g.drawImage(buffImage, 0, 0, null);
         JLabel imgLabel = new JLabel(new ImageIcon(buffImage));
         f.add(imgLabel);
         f.pack();
         f.setVisible(true);
+    }
+    
+    public void viewImages(BufferedImage images[], String title) {
+        System.out.println("viewing image, count: " + images.length);
+        for (int i=0; i<images.length; i++) {
+            viewImage(images[i], title+"-"+i);
+        }
     }
     
     public Dimension getPreferredSize() {
@@ -78,9 +80,8 @@ public class ImageViewer extends Component {
     
     public static void main(String[] args) {
         ImageViewer viewer = new ImageViewer();
-        viewer.viewFromFile("gajah.jpg", "gajah-1");
-        viewer.viewFromFile("tawakkal.jpg", "tawakkal");
-        viewer.viewFromFile("gajah.jpg", "gajah-2");
+        viewer.viewImage("gajah.jpg", "gajah-1");
+        viewer.viewImage("gajah.jpg", "gajah-2");
     }
 }
 

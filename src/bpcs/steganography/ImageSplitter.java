@@ -8,7 +8,8 @@ import java.awt.*;
 
 public class ImageSplitter {
     
-    public void split(BufferedImage image, int numRow, int numCol) {
+    // tinggal ditentukan split nya brp row dan col supaya ukuran chunk nya 8x8 pixel
+    public BufferedImage[] split(BufferedImage image, int numRow, int numCol) {
         ImageViewer imgViewer = new ImageViewer();
 
         int chunks = numRow * numCol;
@@ -23,13 +24,21 @@ public class ImageSplitter {
                 imgs[count] = new BufferedImage(chunkWidth, chunkHeight, image.getType());
 
                 // draws the image chunk
-                imgViewer.viewFromBuffImage(imgs[count], "image-"+count);
-                Graphics2D gr = imgs[count++].createGraphics();
+                Graphics2D gr = imgs[count].createGraphics();
                 gr.drawImage(image, 0, 0, chunkWidth, chunkHeight, chunkWidth * y, chunkHeight * x, chunkWidth * y + chunkWidth, chunkHeight * x + chunkHeight, null);
                 gr.dispose();
+                count++;
             }
         }
-        System.out.println("Splitting done");
+        
+        return imgs;
+    }
+    
+    public boolean[][] getBitPlane(BufferedImage image, int planeIdx) {
+        boolean bitPlane[][] = new boolean[8][8];
+        
+        // bellum selesai
+        return bitPlane;
     }
     
     public static void main(String[] args) throws Exception {

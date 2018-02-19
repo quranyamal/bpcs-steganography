@@ -79,7 +79,13 @@ public class BpcsSteganography {
     void previewAllChunkImages(BufferedImage[] images) {
         ImageViewer imgViewer = new ImageViewer();
         for (int i=0; i<images.length; i++) {
-            imgViewer.viewFromBuffImage(images[i], "image-"+i);
+            imgViewer.viewImage(images[i], "image-"+i);
         }
     }
+    
+    // sehingga gambar berikuran kelipatan 8 pixel tinggi dan lebarnya
+    void addPseudoPixel(BufferedImage image) {
+        // belum gan
+    }
+    
 }
