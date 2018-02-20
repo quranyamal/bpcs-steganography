@@ -19,20 +19,18 @@ public class BitPlane {
         return matrix[row][col];
     }
     
-    int getDiff() {
+    public int getDiff() {
         int diff=0;
         int maxDiff=0;
         for (int row=0; row<SIZE-1; row++) {
             for (int col=0; col<SIZE-1; col++) {
                 if (matrix[row][col]!=matrix[row][col+1]) diff++;
                 if (matrix[row][col]!=matrix[row+1][col]) diff++;
-                maxDiff+=2;
             }
         }
         for (int i=0; i<SIZE-1; i++) {
             if (matrix[7][i]!=matrix[7][i+1]) diff++;
             if (matrix[i][7]!=matrix[i+1][7]) diff++;
-            maxDiff+=2;
         }
         return diff;
     }

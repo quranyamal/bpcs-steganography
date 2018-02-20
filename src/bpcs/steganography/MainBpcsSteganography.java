@@ -62,7 +62,7 @@ public class MainBpcsSteganography {
         Message pesan = new Message("test/short.txt");
         System.out.println(pesan);
         
-        //BpcsViewer viewer = new BpcsViewer();
+        BpcsViewer viewer = new BpcsViewer();
         //viewer.printMessageBytes(pesan);
         
         int input = pesan.getBytes()[0];
@@ -71,7 +71,14 @@ public class MainBpcsSteganography {
         //System.out.println(input + " = " + Arrays.toString(bits));
         
         pesan.setMatrix();
-        //viewer.printMessageSegment(pesan);
+        viewer.printMessageSegment(pesan, 2);
+        System.out.println();
+        
+        viewer.printMessageSegment(Message.wc);
+        System.out.println();
+        
+        viewer.printMessageSegment(pesan.getConjgation(pesan.getSegment(2)));
+        
         
     }
     

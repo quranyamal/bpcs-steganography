@@ -91,15 +91,21 @@ public class BpcsViewer extends Component {
         }
     }
     
-    public void printMessageSegment(Message message) {
-        boolean[][][] matrix = message.getMatrix();
+    public void printMessageSegment(Message message, int segmentIdx) {
+        boolean[][] segment = message.getSegment(segmentIdx);
         
-        for (int segmentIdx=0; segmentIdx<message.numSegment; segmentIdx++) {
-            for (int i=0; i<8; i++) {
-                for (int j=0; j<8; j++) {
-                    System.out.print(matrix[segmentIdx][i][j] + " ");
-                }
-                System.out.println();
+        for (int i=0; i<8; i++) {
+            for (int j=0; j<8; j++) {
+                System.out.print(segment[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public void printMessageSegment(boolean[][] segment) {
+        for (int i=0; i<8; i++) {
+            for (int j=0; j<8; j++) {
+                System.out.print(segment[i][j] + " ");
             }
             System.out.println();
         }

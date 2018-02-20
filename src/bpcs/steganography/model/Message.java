@@ -1,15 +1,28 @@
 package bpcs.steganography.model;
 
+import static bpcs.steganography.model.BitPlane.SIZE;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class Message {
     
+    private static final int MAX_DIFF = 112;
     private String message;
     private byte[] messageBytes;
     private boolean[][][] matrix;
     public int numSegment;
+    
+    public static final boolean[][] wc = 
+            {{false, true, false, true, false, true, false, true},
+             {true, false, true, false, true, false, true, false},
+             {true, false, true, false, true, false, true, false},
+             {false, true, false, true, false, true, false, true},
+             {true, false, true, false, true, false, true, false},
+             {false, true, false, true, false, true, false, true},
+             {true, false, true, false, true, false, true, false},
+             {false, true, false, true, false, true, false, true},
+            };
     
     public Message(String filePath) throws Exception {
         loadMessage(filePath);
@@ -31,6 +44,10 @@ public class Message {
     
     public byte[] getBytes() {
         return messageBytes;
+    }
+    
+    public boolean[][] getSegment(int segmentIdx) {
+        return matrix[segmentIdx];
     }
     
     public int getNumSegment() {
@@ -74,6 +91,37 @@ public class Message {
                 }                
             }
         }
+    }
+    
+    public int getDiff(int segmentIdx) {
+        int diff=0;
+        int maxDiff=0;
+        for (int row=0; row<SIZE-1; row++) {
+            for (int col=0; col<SIZE-1; col++) {
+                if (matrix[segmentIdx][row][col]!=matrix[segmentIdx][row][col+1]) diff++;
+                if (matrix[segmentIdx][row][col]!=matrix[segmentIdx][row+1][col]) diff++;
+            }
+        }
+        for (int i=0; i<SIZE-1; i++) {
+            if (matrix[segmentIdx][7][i]!=matrix[segmentIdx][7][i+1]) diff++;
+            if (matrix[segmentIdx][i][7]!=matrix[segmentIdx][i+1][7]) diff++;
+        }
+        return diff;
+    }
+    
+    public double getComplexity(int segmentIdx) {
+        return (double) getDiff(segmentIdx)/MAX_DIFF;
+    }
+    
+    public boolean[][] getConjgation(boolean[][] plane) {
+        boolean[][] conj = plane;
+        
+        for (int i=0; i<8; i++) {
+            for (int j=0; j<8; j++) {
+                conj[i][j] = conj[i][j] ^ wc[i][j];
+            }
+        }
+        return conj;
     }
     
 }
