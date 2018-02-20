@@ -83,5 +83,12 @@ public class ImageViewer extends Component {
         viewer.viewImage("gajah.jpg", "gajah-1");
         viewer.viewImage("gajah.jpg", "gajah-2");
     }
+    
+    void viewAllChunks(ImageChunk[] chunks) {
+        ImageViewer imgViewer = new ImageViewer();
+        for (int i=0; i<chunks.length; i++) {
+            imgViewer.viewImage(chunks[i].getBuffer(), "image-"+i);
+        }
+    }
 }
 

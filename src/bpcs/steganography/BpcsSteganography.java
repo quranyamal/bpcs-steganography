@@ -41,51 +41,19 @@ public class BpcsSteganography {
         }
     }
     
-    BufferedImage[] getImageChunks(BufferedImage image) {
-        int cols = image.getWidth()/CHUNK_WIDTH;
-        int rows = image.getHeight()/CHUNK_HEIGHT;
-        BufferedImage imageChunks[] = new BufferedImage[rows*cols];
-        
-        int count = 0;
-        for (int x=0; x<rows; x++) {
-            for (int y=0; y<cols; y++) {
-                imageChunks[count] = new BufferedImage(CHUNK_WIDTH, CHUNK_HEIGHT, 
-                        image.getType());
-            }
-        }
-        return imageChunks;
-    }
-    
-    BufferedImage[] getMonochromes(BufferedImage image) {
-        int colorComponentSize = image.getColorModel().getNumComponents();
-        BufferedImage[] imageChromes = new BufferedImage[colorComponentSize];
-        
-        switch (colorComponentSize) {
-            case 3: //rgb
-                for (int i=0; i<image.getHeight(); i++) {
-                    for (int j=0; j>image.getWidth(); j++) {
-                        int rgb = image.getRGB(j, i);
-                        
-                    }
-                }
-        }
-        return null;
-    }
-    
-    BufferedImage getImagePlane(BufferedImage image, int planeIdx) {
-        return null;
-    }
-    
-    void previewAllChunkImages(BufferedImage[] images) {
-        ImageViewer imgViewer = new ImageViewer();
-        for (int i=0; i<images.length; i++) {
-            imgViewer.viewImage(images[i], "image-"+i);
-        }
-    }
-    
-    // sehingga gambar berikuran kelipatan 8 pixel tinggi dan lebarnya
-    void addPseudoPixel(BufferedImage image) {
-        // belum gan
-    }
+//    BufferedImage[] getImageChunks(BufferedImage image) {
+//        int cols = image.getWidth()/CHUNK_WIDTH;
+//        int rows = image.getHeight()/CHUNK_HEIGHT;
+//        BufferedImage imageChunks[] = new BufferedImage[rows*cols];
+//        
+//        int count = 0;
+//        for (int x=0; x<rows; x++) {
+//            for (int y=0; y<cols; y++) {
+//                imageChunks[count] = new BufferedImage(CHUNK_WIDTH, CHUNK_HEIGHT, 
+//                        image.getType());
+//            }
+//        }
+//        return imageChunks;
+//    }
     
 }

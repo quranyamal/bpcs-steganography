@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.awt.*;
+import java.awt.image.DataBufferByte;
 
 
 public class ImageSplitter {
@@ -34,20 +35,44 @@ public class ImageSplitter {
         return imgs;
     }
     
-    public boolean[][] getBitPlane(BufferedImage image, int planeIdx) {
-        boolean bitPlane[][] = new boolean[8][8];
-        
-        // bellum selesai
-        return bitPlane;
+//    public boolean[][][] getBitPlane(BufferedImage image) {
+//        int numPlane = image.getColorModel().getPixelSize();
+//        boolean bitPlanes[][][] = new boolean[numPlane][8][8];
+//        
+//        int idx=0;
+//        for (int i=0; i<8; i++) {
+//            for (int j=0; j<8; j++) {
+//                int pixel = image.getRGB(i, j);
+//                for (int planeIdx=0; planeIdx<numPlane; planeIdx++) {
+//                    bitPlanes[numPlane-1-planeIdx][i][j] = (1<<planeIdx & pixel) != 0;
+//                }
+//                System.out.println("pixel("+i+","+j+"): "+ Integer.toBinaryString(pixel));
+//            }
+//        }
+//        return bitPlanes;
+//    }
+    
+    public void printBitPlane(boolean bitPlane[][]) {
+        for (int i=0; i<8; i++) {
+            for (int j=0; j<8; j++) {
+                System.out.print(bitPlane[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+    
+    public byte[] getPixels(BufferedImage image) {
+        return ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
     }
     
     public static void main(String[] args) throws Exception {
         ImageSplitter imgSplitter = new ImageSplitter();
         
-        File file = new File("gajah.jpg");
+        File file = new File("rgb-test.bmp");
         FileInputStream fis = new FileInputStream(file);
         BufferedImage image = ImageIO.read(fis);
         
-        imgSplitter.split(image, 2, 2);
+        BufferedImage[] imgChunks = imgSplitter.split(image, 2, 2);
+        //imgSplitter.getBitPlane(imgChunks[0]);
     }
 }
