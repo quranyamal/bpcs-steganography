@@ -41,8 +41,8 @@ public class BitPlane {
         return (double) getDiff()/MAX_DIFF;
     }
     
-    public boolean isComplexPlane(){
-        return getComplexity()>TRESHOLD;
+    public boolean isInformative(){
+        return getComplexity()<TRESHOLD;
     }
     
 }

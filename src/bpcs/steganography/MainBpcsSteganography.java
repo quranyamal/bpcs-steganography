@@ -3,17 +3,19 @@ package bpcs.steganography;
 import bpcs.steganography.viewer.BpcsViewer;
 import bpcs.steganography.model.Image;
 import bpcs.steganography.model.BitPlane;
+import bpcs.steganography.model.Message;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 public class MainBpcsSteganography {
     
-    public static void main(String[] args) throws Exception {
-        
+    public static void test1() {
         Image image = new Image("images/rgb-16x16.bmp");
         BpcsViewer viewer = new BpcsViewer();
 
@@ -24,7 +26,7 @@ public class MainBpcsSteganography {
         bitPlane.setMatrix(4, 4, true);
         viewer.printBitPlane(bitPlane);
         System.out.println("complexity-1: " + bitPlane.getComplexity());
-        System.out.println("isComplex: " + bitPlane.isComplexPlane()+"\n");
+        System.out.println("isInformative: " + bitPlane.isInformative()+"\n");
         
         
         for (int i=0; i<8; i++) {
@@ -45,14 +47,32 @@ public class MainBpcsSteganography {
         
         viewer.printBitPlane(bitPlane);
         System.out.println("complexity-2: " + bitPlane.getComplexity());
-        System.out.println("isComplex: " + bitPlane.isComplexPlane()+"\n");
+        System.out.println("isInformative: " + bitPlane.isInformative()+"\n");
         
         bitPlane.setMatrix(4, 4, false);
         bitPlane.setMatrix(4, 5, false);
         bitPlane.setMatrix(7, 0, false);
         viewer.printBitPlane(bitPlane);
         System.out.println("complexity-3: " + bitPlane.getComplexity());
-        System.out.println("isComplex: " + bitPlane.isComplexPlane()+"\n");
+        System.out.println("isInformative: " + bitPlane.isInformative()+"\n");
+    }
+    
+    public static void main(String[] args) throws Exception {
+        
+        Message pesan = new Message("test/short.txt");
+        System.out.println(pesan);
+        
+        //BpcsViewer viewer = new BpcsViewer();
+        //viewer.printMessageBytes(pesan);
+        
+        int input = pesan.getBytes()[0];
+        
+        //System.out.println();
+        //System.out.println(input + " = " + Arrays.toString(bits));
+        
+        pesan.setMatrix();
+        //viewer.printMessageSegment(pesan);
+        
     }
     
 }

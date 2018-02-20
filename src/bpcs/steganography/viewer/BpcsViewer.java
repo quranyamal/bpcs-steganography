@@ -3,6 +3,7 @@ package bpcs.steganography.viewer;
 import bpcs.steganography.model.Image;
 import bpcs.steganography.model.ImageChunk;
 import bpcs.steganography.model.BitPlane;
+import bpcs.steganography.model.Message;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.WindowAdapter;
@@ -81,4 +82,27 @@ public class BpcsViewer extends Component {
             System.out.println();
         }
     }
+    
+    public void printMessageBytes(Message message) {
+        byte[] bytes = message.getBytes();
+        
+        for (int i=0; i<bytes.length; i++) {
+            System.out.print(bytes[i] + " ");
+        }
+    }
+    
+    public void printMessageSegment(Message message) {
+        boolean[][][] matrix = message.getMatrix();
+        
+        for (int segmentIdx=0; segmentIdx<message.numSegment; segmentIdx++) {
+            for (int i=0; i<8; i++) {
+                for (int j=0; j<8; j++) {
+                    System.out.print(matrix[segmentIdx][i][j] + " ");
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
+    }
+    
 }
