@@ -21,12 +21,14 @@ public class BpcsViewer extends Component {
     }
     
     public void printImageProperties(Image image) {
+        System.out.println("=========== Image Properties ===========");
         System.out.println("Image Height:\t " + image.getHeight());
         System.out.println("Image Width :\t " + image.getWidth());
         System.out.println("Image Type  :\t " + image.getBuffer().getType());
         System.out.println("Pixel Size  :\t " + image.getPixelSize());
         System.out.println("Num Compnn. :\t " + image.getNumComponent());
         System.out.println("Num Col.Comp:\t " + image.getNumColorComponent());
+        System.out.println("========================================");
     }
     
     public void viewImage(Image image, String title) {
