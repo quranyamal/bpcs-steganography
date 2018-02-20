@@ -168,17 +168,18 @@ public class Image {
     public void injectMessage(BitPlane[] bitPlanes) {
         int messageToInject = bitPlanes.length;
         int idx = 0;
-        System.out.println(bitPlanes.length);
-        while (messageToInject >= 1) {
+        while (messageToInject > 0) {
             if (redBitPlanes.get(idx).getComplexity() > complexityThreshold) {
                 redBitPlanes.set(idx, bitPlanes[bitPlanes.length - messageToInject]);
                 messageToInject--;
             }
-            if (greenBitPlanes.get(idx).getComplexity() > complexityThreshold) {
+
+            if (messageToInject > 0 && greenBitPlanes.get(idx).getComplexity() > complexityThreshold) {
                 greenBitPlanes.set(idx, bitPlanes[bitPlanes.length - messageToInject]);
                 messageToInject--;
             }
-            if (blueBitPlanes.get(idx).getComplexity() > complexityThreshold) {
+
+            if (messageToInject > 0 && blueBitPlanes.get(idx).getComplexity() > complexityThreshold) {
                 blueBitPlanes.set(idx, bitPlanes[bitPlanes.length - messageToInject]);
                 messageToInject--;
             }

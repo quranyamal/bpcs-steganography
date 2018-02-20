@@ -21,8 +21,9 @@ public class Message {
         for (byte b : streamFile) {
             streamByte += String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
         }
-        bitPlanes = new BitPlane[(streamByte.length() / SIZE*SIZE) + 1];
+        bitPlanes = new BitPlane[(streamByte.length()/(SIZE*SIZE)) + 1];
         int bitPlanesIdx = 0;
+
 
         while (streamByte.length() >= SIZE*SIZE) {
             String temp = streamByte.substring(0,SIZE*SIZE);
