@@ -16,9 +16,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class BpcsViewer extends Component {
+public class BpcsSteganoViewer extends Component {
     
-    public BpcsViewer() {
+    public BpcsSteganoViewer() {
     }
     
     public void printImageProperties(Image image) {

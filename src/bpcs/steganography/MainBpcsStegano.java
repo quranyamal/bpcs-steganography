@@ -1,6 +1,7 @@
 package bpcs.steganography;
 
-import bpcs.steganography.viewer.BpcsViewer;
+import bpcs.steganography.controller.BpcsSteganoController;
+import bpcs.steganography.viewer.BpcsSteganoViewer;
 import bpcs.steganography.model.Image;
 import bpcs.steganography.model.BitPlane;
 import bpcs.steganography.model.Message;
@@ -13,11 +14,11 @@ import java.util.Arrays;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-public class MainBpcsSteganography {
+public class MainBpcsStegano {
     
     public static void test1() {
         Image image = new Image("images/rgb-16x16.bmp");
-        BpcsViewer viewer = new BpcsViewer();
+        BpcsSteganoViewer viewer = new BpcsSteganoViewer();
 
         viewer.printImageProperties(image);
         viewer.viewAllChunks(image.getAllChunk());
@@ -61,7 +62,7 @@ public class MainBpcsSteganography {
         Message pesan = new Message("test/short.txt");
         System.out.println(pesan);
         
-        BpcsViewer viewer = new BpcsViewer();
+        BpcsSteganoViewer viewer = new BpcsSteganoViewer();
         viewer.printMessageBytes(pesan);
         
         int input = pesan.getBytes()[0];
@@ -81,10 +82,11 @@ public class MainBpcsSteganography {
     
     public static void main(String[] args) throws Exception {
         
-        Message pesan = new Message("test/short.txt");
-        System.out.println(pesan);
+        Message message = new Message("test/short.txt");
+        System.out.println(message);
         
-        BpcsViewer viewer = new BpcsViewer();
+        BpcsSteganoViewer viewer = new BpcsSteganoViewer();
+        BpcsSteganoController controller = new BpcsSteganoController();
         
         Image image = new Image("images/rgb-16x16.bmp");
         System.out.println("chunk before");
@@ -96,7 +98,7 @@ public class MainBpcsSteganography {
         viewer.printMessageSegment(Message.wc);
         System.out.println();
         
-        image.insertMessage(pesan);
+        controller.injectMessage(image, message);
         System.out.println("chunk after");
         viewer.printBitPlane(image.getChunk(0, 0).getBitPlane(0));
         viewer.viewImage(image, "Image after");

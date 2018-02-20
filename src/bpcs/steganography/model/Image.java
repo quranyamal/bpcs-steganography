@@ -14,8 +14,8 @@ public class Image {
     private BufferedImage buffImage;
     private ImageChunk[][] chunks;
     
-    public int rows;
-    public int cols;
+    private int rows;
+    private int cols;
     private int numChunk;
 
     public Image(String pathToFile) {
@@ -57,6 +57,10 @@ public class Image {
     
     public int getWidth() {
         return buffImage.getWidth();
+    }
+    
+    public int getNumChunk() {
+        return numChunk;
     }
     
     public ImageChunk getChunk(int row, int col) {
@@ -105,26 +109,8 @@ public class Image {
         return imgs;
     }
     
-    private BitPlane getFillablePlane() {
+    public BitPlane getFillablePlane() {
         return chunks[0][0].getBitPlane(0);
     }
     
-    private void fillPlane(BitPlane fillable, boolean[][] fill) {
-        for (int i=0; i<8; i++) {
-            for (int j=0; j<8; j++) {
-                fillable.setMatrix(i, j, fill[i][j]);
-            }
-        }
-    }
-    
-    public void insertMessage(Message message) {
-        
-        int msgSeg=0, chunkIdx=0;
-        while (msgSeg<message.getNumSegment() && chunkIdx<numChunk) {
-            
-            msgSeg++;
-        }
-        
-        fillPlane(getFillablePlane(), Message.wc);
-    }
 }
