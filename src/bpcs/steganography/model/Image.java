@@ -1,5 +1,6 @@
-package bpcs.steganography;
+package bpcs.steganography.model;
 
+import bpcs.steganography.model.ImageChunk;
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -9,18 +10,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Image {
-    static int CHUNK_SIZE = 8;
     
     private BufferedImage buffImage;
-    private BufferedImage[][] chunks;
+    private ImageChunk[][] chunks;
+    
+    public int rows;
+    public int cols;
 
     public Image(String pathToFile) {
         loadImage(pathToFile);
+        
+        cols = getWidth()/ImageChunk.SIZE;
+        rows = getHeight()/ImageChunk.SIZE;
+        
         initImageChunks();
     }
     
     public BufferedImage getBuffer() {
         return buffImage;
+    }
+    
+    public int getPixelSize() {
+        return buffImage.getColorModel().getPixelSize();
+    }
+    
+    public int getNumColorComponent() {
+        return buffImage.getColorModel().getNumColorComponents();
+    }
+    
+    public int getNumComponent() {
+        return buffImage.getColorModel().getNumComponents();
     }
     
     private void loadImage(String pathToFile) {
@@ -31,49 +50,38 @@ public class Image {
         }
     }
     
-    int getHeight() {
+    public int getHeight() {
         return buffImage.getHeight();
     }
     
-    int getWidth() {
+    public int getWidth() {
         return buffImage.getWidth();
     }
     
-    private void printImageProperties() {
-        if (buffImage!=null) {
-            System.out.println("Image Height:\t " + buffImage.getHeight());
-            System.out.println("Image Width :\t " + buffImage.getWidth());
-            System.out.println("Image Type  :\t " + buffImage.getType());
-            System.out.println("Pixel Size  :\t " + buffImage.getColorModel().getPixelSize());
-            System.out.println(buffImage.getColorModel());
-        } else {
-            System.out.println("Image is not loaded");
-        }
+    public ImageChunk getChunk(int row, int col) {
+        return chunks[row][col];
+    }
+    
+    public ImageChunk[][] getAllChunk(){
+        return chunks;
     }
 
     private void initImageChunks() {
-        int cols = buffImage.getWidth()/CHUNK_SIZE;
-        int rows = buffImage.getHeight()/CHUNK_SIZE;
         int numChunk = rows * cols;
         
-        System.out.println("rows:"+rows+" cols:"+cols);
         BufferedImage[] buffImages = split(buffImage, rows, cols);
-        ImageViewer viewer = new ImageViewer();
-        chunks = new BufferedImage[rows][cols];
+        chunks = new ImageChunk[rows][cols];
         
         int count=0;
         for (int i=0; i<rows; i++) {
             for (int j=0; j<cols; j++) {
-                chunks[i][j] = buffImages[count];
-                viewer.viewImage(chunks[i][j], "chunk-"+i+","+j);
+                chunks[i][j] = new ImageChunk(buffImages[count]);
                 count++;
             }
         }
     }
     
     public BufferedImage[] split(BufferedImage image, int numRow, int numCol) {
-        ImageViewer imgViewer = new ImageViewer();
-
         int chunks = numRow * numCol;
 
         int chunkWidth = image.getWidth() / numCol; // determines the chunk width and height

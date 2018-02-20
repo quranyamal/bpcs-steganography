@@ -1,5 +1,8 @@
-package bpcs.steganography;
+package bpcs.steganography.viewer;
 
+import bpcs.steganography.model.Image;
+import bpcs.steganography.model.ImageChunk;
+import bpcs.steganography.model.BitPlane;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.WindowAdapter;
@@ -15,6 +18,15 @@ import javax.swing.JLabel;
 public class BpcsViewer extends Component {
     
     public BpcsViewer() {
+    }
+    
+    public void printImageProperties(Image image) {
+        System.out.println("Image Height:\t " + image.getHeight());
+        System.out.println("Image Width :\t " + image.getWidth());
+        System.out.println("Image Type  :\t " + image.getBuffer().getType());
+        System.out.println("Pixel Size  :\t " + image.getPixelSize());
+        System.out.println("Num Compnn. :\t " + image.getNumComponent());
+        System.out.println("Num Col.Comp:\t " + image.getNumColorComponent());
     }
     
     public void viewImage(Image image, String title) {
@@ -46,5 +58,25 @@ public class BpcsViewer extends Component {
         f.add(imgLabel);
         f.pack();
         f.setVisible(true);
+    }
+    
+    public void viewAllChunks(ImageChunk[][] chunks) {
+        int row = chunks.length;
+        int col = chunks[0].length;
+        
+        for (int i=0; i<row; i++) {
+            for (int j=0; j<col; j++) {
+                viewImage(chunks[i][j].getBuffer(), "chunk["+i+":"+j+"]");
+            }
+        }
+    }
+    
+    public void printBitPlane(BitPlane bitPlane) {
+        for (int i=0; i<ImageChunk.SIZE; i++) {
+            for (int j=0; j<ImageChunk.SIZE; j++) {
+                System.out.print(bitPlane.getBit(i, j) + " ");
+            }
+            System.out.println();
+        }
     }
 }
