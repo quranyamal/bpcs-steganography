@@ -31,10 +31,6 @@ public class ImageChunk {
         return chunkBuffer;
     }
     
-    public BitPlane getPlane(int idx) {
-        return bitPlanes[idx];
-    }
-    
     private void initBitPlane() {
         int numPlane = chunkBuffer.getColorModel().getPixelSize();
         
@@ -50,8 +46,8 @@ public class ImageChunk {
         }
     }
     
-    public BitPlane getBitPlane(int planeIdx) {
-        return bitPlanes[planeIdx];
+    public BitPlane getBitPlane(int idx) {
+        return bitPlanes[idx];
     }
     
     // sepertinya tidak jadi digunakan

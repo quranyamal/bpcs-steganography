@@ -57,17 +57,16 @@ public class MainBpcsSteganography {
         System.out.println("isInformative: " + bitPlane.isInformative()+"\n");
     }
     
-    public static void main(String[] args) throws Exception {
-        
+    public static void test2() throws Exception {
         Message pesan = new Message("test/short.txt");
         System.out.println(pesan);
         
         BpcsViewer viewer = new BpcsViewer();
-        //viewer.printMessageBytes(pesan);
+        viewer.printMessageBytes(pesan);
         
         int input = pesan.getBytes()[0];
         
-        //System.out.println();
+        System.out.println();
         //System.out.println(input + " = " + Arrays.toString(bits));
         
         pesan.setMatrix();
@@ -78,8 +77,29 @@ public class MainBpcsSteganography {
         System.out.println();
         
         viewer.printMessageSegment(pesan.getConjgation(pesan.getSegment(2)));
+    }
+    
+    public static void main(String[] args) throws Exception {
         
+        Message pesan = new Message("test/short.txt");
+        System.out.println(pesan);
         
+        BpcsViewer viewer = new BpcsViewer();
+        
+        Image image = new Image("images/rgb-16x16.bmp");
+        System.out.println("chunk before");
+        viewer.printBitPlane(image.getChunk(0, 0).getBitPlane(0));
+        System.out.println();
+        viewer.viewImage(image, "Image before");
+        
+        System.out.println("fill with:");
+        viewer.printMessageSegment(Message.wc);
+        System.out.println();
+        
+        image.insertMessage(pesan);
+        System.out.println("chunk after");
+        viewer.printBitPlane(image.getChunk(0, 0).getBitPlane(0));
+        viewer.viewImage(image, "Image after");
     }
     
 }
