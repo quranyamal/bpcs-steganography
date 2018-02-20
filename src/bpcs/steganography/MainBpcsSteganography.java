@@ -14,7 +14,7 @@ public class MainBpcsSteganography {
     
     public static void main(String[] args) throws Exception {
         
-        Image image = new Image("rgb-16x16.bmp");
+        Image image = new Image("images/rgb-16x16.bmp");
         BpcsViewer viewer = new BpcsViewer();
 
         viewer.printImageProperties(image);
